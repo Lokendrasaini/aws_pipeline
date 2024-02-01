@@ -1,16 +1,19 @@
 version: 0.2
 
 phases:
-  install: 
-    runtime-versions:
-      nodejs: 10
+  install:
+    commands:
+      - echo Installing NGINX
+      - sudo apt-get update
+      - sudo apt-get install nginx -y
   build:
     commands:
-      - echo "Package & Dependicies are getting installed"
-      - npm -f install
-      - echo "Packages have been installed"
-      - echon "Storing Build Artifact to the Location"
+      - echo Build started on `date`
+      - cp index.html /var/www/html/
+  post_build:
+    commands:
+      - echo Configuring NGINX
+
 artifacts:
-  type: zip
-  paths:
-    - '*'
+  files:
+    - '**/*'
